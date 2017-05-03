@@ -1,0 +1,49 @@
+{
+  "groups": [
+    {
+      "id": "testGroup",
+      "name": "testGroup",
+      "eventId": [
+        "event1"
+      ],
+      "budgetId": "budget1",
+      "eventsForCheck": [],
+      "messageId": [],
+      "userId": [
+        "test@test.cz"
+      ],
+      "leader": "test@test.cz"
+    }
+  ],
+  "messages": [
+    {
+      "text": "Hello"
+    }
+  ],
+  "users": [
+    {
+      "name": "Pavel Kratochvil",
+      "id": "test@test.cz",
+      "email": "test@test.cz",
+      "eventId": [],
+      "groupId": [
+        "testGroup"
+      ]
+    }
+  ],
+  "budgets": [
+    {
+      "id": "budget1",
+      "expDate": "4.5.2017",
+      "value": 100
+    }
+  ],
+  "events": [
+    {
+      "id": "event1",
+      "name": "event1",
+      "expDate": "4.5.2017",
+      "value": 100
+    }
+  ]
+}
