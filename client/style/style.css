@@ -11,3 +11,7 @@
 .centered {
     text-align: center;
 }
+
+.valign-wrapper {
+    height: 95%;
+}

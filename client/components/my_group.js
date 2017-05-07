@@ -1,15 +1,19 @@
 import React, {Component} from 'react';
 
 class MyGroup extends Component {
-    constructor(){
+    constructor() {
         super();
     }
-    render(){
+
+    render() {
         return (
             <div className="row">
-                <div className="col s6 centered"><i className="material-icons">add</i><span>Create Group</span></div>
-                <div className="col s6 centered"><i className="material-icons">queue</i><span>Enter Group</span></div>
+                <div className="valign-wrapper">
+                    <div className="col s6 centered"><h4>Create Group</h4><i className="large material-icons">add</i></div>
+                    <div className="col s6 centered"><h4>Enter Group</h4><i className="large material-icons">queue</i></div>
+                </div>
             </div>
+
         )
     }
 }

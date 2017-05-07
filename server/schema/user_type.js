@@ -8,6 +8,7 @@ const UserType = new GraphQLObjectType({
     fields: () => ({
         id: {type: GraphQLID},
         name: {type: GraphQLString},
+        nickName: {type: GraphQLString},
         email: {type: GraphQLString},
         events: {
             type: new GraphQLList(EventType),

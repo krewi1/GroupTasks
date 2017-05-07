@@ -23,12 +23,10 @@
   "users": [
     {
       "name": "Pavel Kratochvil",
-      "id": "test@test.cz",
+      "id": "1",
+      "nickName": "krewilone",
       "email": "test@test.cz",
-      "eventId": [],
-      "groupId": [
-        "testGroup"
-      ]
+      "groupId": "testGroup"
     }
   ],
   "budgets": [
