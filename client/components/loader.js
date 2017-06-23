@@ -2,9 +2,7 @@ import React from 'react';
 
 const Loader = () => {
     return (
-        <div className="loader">
-            placeholder
-        </div>
+        <div className="spinner"></div>
     )
 };
 

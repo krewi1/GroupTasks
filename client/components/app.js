@@ -4,6 +4,7 @@ import {graphql} from 'react-apollo';
 
 import SideBar from './side_bar.js';
 import Loader from './loader.js';
+import {query} from '../queries/queries.js'
 
 class App extends Component {
     render() {
@@ -18,30 +19,6 @@ class App extends Component {
         );
     }
 }
-;
 
-const query = gql`{
-        profile{
-            id
-            nickName
-            name
-            email
-            group{
-              leader{
-                id
-              }
-              users{
-                id
-                nickName
-              }
-              events{
-                id
-                name
-                expDate
-                value
-              }
-            }
-        }
-    }`;
 
 export default graphql(query)(App)

@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
-import {Link} from 'react-router';
+import {Link, hashHistory} from 'react-router';
 
-class SongCreate extends Component {
+class GroupCreate extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isOpened: true,
-            name: ''
+            name: '',
+            userId: props.user.id
         };
 
         this.handleInputChange = this.handleInputChange.bind(this)
@@ -27,14 +28,17 @@ class SongCreate extends Component {
 
     onSubmit(event) {
         event.preventDefault();
+        debugger;
 
         let variableProp = {
             variables: {
-                name: this.state.name
+                name: this.state.name,
+                opened: this.state.isOpened,
+                userId: this.state.userId
             }/*,
              refetchQueries: [{query: query}]*/
         };
-        this.props.mutate(variableProp)
+        this.props.try(variableProp)
             .then(() => hashHistory.push('/'));
     }
 
@@ -42,7 +46,9 @@ class SongCreate extends Component {
         return (
             <div>
                 <Link to="/">Back</Link>
+
                 <h3>Create a new group</h3>
+
                 <form onSubmit={this.onSubmit.bind(this)}>
                     <label>Song Title
                         <input type="text"
@@ -51,6 +57,7 @@ class SongCreate extends Component {
                                placeholder="Group name"
                                onChange={this.handleInputChange}/>
                     </label>
+
                     <p>
                         <input type="checkbox" className="filled-in" id="isOpened"
                                name="isOpened" checked={this.state.isOpened}
@@ -65,14 +72,16 @@ class SongCreate extends Component {
 }
 
 const mutation = gql`
-    mutation AddGroup($name: String, $opened: boolean){
-        addSong(name: $name) {
-            id
-            opened
-            name
+    mutation AddGroup($name: String, $opened: Boolean, $userId: ID){
+        addGroup(name: $name,opened: $opened, userId: $userId) {
+            group{
+                users{
+                    id
+                }
+            }
         }
     }
 `;
 
-export default graphql(mutation)(SongCreate);
+export default graphql(mutation, {name: 'try'})(GroupCreate);
 

@@ -11,7 +11,7 @@ class LandingPage extends Component {
 
         if(!this.props.user.group){
             return (
-                <GroupEmpty />
+                <GroupEmpty user={user}/>
             )
         }
         debugger

@@ -26,7 +26,7 @@ function renderBody(props, model, clickable, mutationable, keyValue) {
         let deleteKey = item[keyValue];
         let delButton;
         if (mutationable.allowed) {
-            delButton = <button onClick={mutationable.handler.bind(null, deleteKey)}/>;
+            delButton = <i className="btn material-icons red darken-4" onClick={()=>mutationable.handler(deleteKey)}>delete</i>;
         }
         let rowCols = props.map((prop) => renderCell(item[prop]));
         if (!clickable.allowed) {

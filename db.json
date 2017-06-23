@@ -3,21 +3,32 @@
     {
       "id": "testGroup",
       "name": "testGroup",
+      "opened": true,
       "eventId": [
         "event1"
       ],
       "budgetId": "budget1",
       "eventsForCheck": [],
-      "messageId": [],
       "userId": [
-        "test@test.cz"
+        "1"
       ],
       "leader": "1"
-    }
-  ],
-  "messages": [
+    },
     {
-      "text": "Hello"
+      "name": "ahoj",
+      "opened": true,
+      "eventId": [],
+      "budgetId": null,
+      "usersIds": [
+        "1",
+        "2",
+        "3"
+      ],
+      "leader": "1",
+      "id": "HJfTZbs7Z",
+      "users": [
+        "[object Object]"
+      ]
     }
   ],
   "users": [
@@ -26,7 +37,21 @@
       "id": "1",
       "nickName": "krewilone",
       "email": "test@test.cz",
-      "groupId": "testGroup"
+      "groupId": "HJfTZbs7Z"
+    },
+    {
+      "name": "Pavel Kratochvil",
+      "id": "2",
+      "nickName": "krewilone",
+      "email": "test@test.cz",
+      "groupId": null
+    },
+    {
+      "name": "Pavel Kratochvil",
+      "id": "3",
+      "nickName": "krewilone",
+      "email": "test@test.cz",
+      "groupId": null
     }
   ],
   "budgets": [
