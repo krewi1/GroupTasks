@@ -1,14 +1,23 @@
 import React, {Component} from 'react';
 
-import SideBar from './side_bar';
-import MyGroup from './my_group';
+import GroupEmpty from './my_group';
+import GroupDetail from './group_detail';
 
 class LandingPage extends Component {
     render() {
-        return (
+        const user = this.props.user;
+        const group = user.group;
+        const isGroupAdmin = group && group.leader.id === user.id;
 
-            <MyGroup />
-        )
+        if(!this.props.user.group){
+            return (
+                <GroupEmpty />
+            )
+        }
+        debugger
+        return (
+            <GroupDetail adminMode={isGroupAdmin}
+                group={group}/>)
     }
 }
 

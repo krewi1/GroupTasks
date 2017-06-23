@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
-import {Link} from 'react-router';
+import {Link, hashHistory} from 'react-router';
 
-class SongCreate extends Component {
+class Budget extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -74,5 +74,4 @@ const mutation = gql`
     }
 `;
 
-export default graphql(mutation)(SongCreate);
-
+export default graphql(mutation)(Budget);

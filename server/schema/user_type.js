@@ -17,12 +17,15 @@ const UserType = new GraphQLObjectType({
                     .then(res => res.data);
             }
         },
-        groups: {
+        group: {
             //fixing circular reference with require inside scope
-            type: new GraphQLList(require('./group_type')),
+            type: require('./group_type'),
             resolve(parentValue){
-                return axios.get(`http://localhost:3000/users/${parentValue.id}/groups`)
-                    .then(res => res.data);
+
+                    return axios.get(`http://localhost:3000/groups/${parentValue.groupId}`)
+                        .then(res => res.data)
+                        .catch(()=>{})
+
             }
         }
     })

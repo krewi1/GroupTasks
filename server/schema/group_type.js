@@ -17,13 +17,6 @@ const GroupType = new GraphQLObjectType({
                     .then(res => res.data);
             }
         },
-        messages: {
-            type: new GraphQLList(MessageType),
-            resolve(parentValue) {
-                return axios.get(`http://localhost:3000/groups/${parentValue.id}/messages`)
-                    .then(res => res.data);
-            }
-        },
         leader: {
             type: UserType,
             resolve(parentValue){
@@ -34,7 +27,6 @@ const GroupType = new GraphQLObjectType({
         users: {
             type: new GraphQLList(UserType),
             resolve(parentValue){
-                console.log(`http://localhost:3000/groups/${parentValue.id}/users`);
                 return axios.get(`http://localhost:3000/groups/${parentValue.id}/users`)
                     .then(res => res.data);
             }

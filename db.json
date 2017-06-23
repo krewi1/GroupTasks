@@ -12,7 +12,7 @@
       "userId": [
         "test@test.cz"
       ],
-      "leader": "test@test.cz"
+      "leader": "1"
     }
   ],
   "messages": [
@@ -41,6 +41,7 @@
       "id": "event1",
       "name": "event1",
       "expDate": "4.5.2017",
+      "done": false,
       "value": 100
     }
   ]
