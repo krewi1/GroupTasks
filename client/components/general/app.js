@@ -4,7 +4,7 @@ import {graphql} from 'react-apollo';
 
 import SideBar from './side_bar.js';
 import Loader from './loader.js';
-import {query} from '../queries/queries.js'
+import {query} from '../../queries/queries.js'
 
 class App extends Component {
     render() {

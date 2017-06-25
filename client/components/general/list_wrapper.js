@@ -26,11 +26,11 @@ function renderBody(props, model, clickable, mutationable, keyValue) {
         let deleteKey = item[keyValue];
         let delButton;
         if (mutationable.allowed) {
-            delButton = <i className="btn material-icons red darken-4" onClick={()=>mutationable.handler(deleteKey)}>delete</i>;
+            delButton = <td><i className="btn material-icons red darken-4" onClick={()=>mutationable.handler(deleteKey)}>delete</i></td>;
         }
         let rowCols = props.map((prop) => renderCell(item[prop]));
         if (!clickable.allowed) {
-            return (<tr>
+            return (<tr key={item.id}>
                 {rowCols}
                 {mutationable.allowed && delButton}
             </tr>)
@@ -45,7 +45,7 @@ function renderBody(props, model, clickable, mutationable, keyValue) {
 }
 
 function renderCell(value) {
-    return <td>{value}</td>;
+    return <td key={value}>{value}</td>;
 }
 
 

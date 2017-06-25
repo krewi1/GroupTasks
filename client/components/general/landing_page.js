@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import GroupEmpty from './my_group';
-import GroupDetail from './group_detail';
+import GroupEmpty from '../group/my_group';
+import GroupDetail from '../group/group_detail';
 
 class LandingPage extends Component {
     render() {
