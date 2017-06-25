@@ -19,16 +19,8 @@
       "opened": true,
       "eventId": [],
       "budgetId": null,
-      "usersIds": [
-        "1",
-        "2",
-        "3"
-      ],
       "leader": "1",
-      "id": "HJfTZbs7Z",
-      "users": [
-        "[object Object]"
-      ]
+      "id": "HJfTZbs7Z"
     }
   ],
   "users": [
@@ -44,14 +36,14 @@
       "id": "2",
       "nickName": "krewilone",
       "email": "test@test.cz",
-      "groupId": null
+      "groupId": "HJfTZbs7Z"
     },
     {
       "name": "Pavel Kratochvil",
       "id": "3",
       "nickName": "krewilone",
       "email": "test@test.cz",
-      "groupId": null
+      "groupId": "HJfTZbs7Z"
     }
   ],
   "budgets": [
@@ -66,6 +58,8 @@
       "id": "event1",
       "name": "event1",
       "expDate": "4.5.2017",
+      "groupId": "HJfTZbs7Z",
+      "userId": "1",
       "done": false,
       "value": 100
     }

@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
 
-import ProgressBar from './progress_bar';
-import ListWrapper from './list_wrapper';
-import {query} from '../queries/queries.js'
+import ProgressBar from '../general/progress_bar';
+import ListWrapper from '../general/list_wrapper';
+import {query} from '../../queries/queries.js'
 
 class GroupDetail extends Component {
     constructor({group}) {
