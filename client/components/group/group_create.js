@@ -37,7 +37,7 @@ class GroupCreate extends Component {
              refetchQueries: [{query: query}]*/
         };
         this.props.try(variableProp)
-            .then(() => hashHistory.push('/'));
+            .then(() => hashHistory.push(`/${this.state.userId}`));
     }
 
     render() {

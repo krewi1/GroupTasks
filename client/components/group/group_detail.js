@@ -49,17 +49,6 @@ class GroupDetail extends Component {
         this.props.doneEvent(variableProp);
     };
 
-    static wrapStateToString(state){
-        let newState = Object.assign({}, state);
-        Object.keys(newState).forEach((key)=>{
-            let new_key = `'${key}'`;
-                Object.defineProperty(newState, new_key,
-                    Object.getOwnPropertyDescriptor(newState, key));
-                delete newState[key];
-        });
-        return newState
-
-    }
 
 
     handleUserRemove = (userId) => {
@@ -85,11 +74,12 @@ class GroupDetail extends Component {
     render() {
         debugger;
         let group = this.props.group;
+        let progressBar = Boolean(group.budgetInfo)? <ProgressBar adminMode={this.state.adminMode} progress={group.budgetInfo[this.props.user.id]||0}
+                                                                   maximum={group.budget.value }/> : <div />;
         return (
             <div>
-                <ProgressBar adminMode={this.state.adminMode} progress={group.budgetInfo[this.props.user.id]}
-                             maximum={group.budget.value}/>
-                <h2>Group</h2>
+                {progressBar}
+                <h2>Group {group.name} #{group.id}</h2>
                 <div className="tab">
                     <button className="tablinks" onClick={() => this.setState({selected: 0})}>Users</button>
                     <button className="tablinks" onClick={() => this.setState({selected: 1})}>Events</button>
@@ -110,13 +100,13 @@ class GroupDetail extends Component {
                 <div className="tabcontent" style={{display: this.state.selected !== 1 && "none"}}>
                     <ListWrapper props={{name: "Name", expDate: "Expiration Date", value: "Value"}}
                                  model={group.events.filter((event) => !Boolean(event.user) && moment().diff(event.expDate) < 0)}
-                                 mutationable={{allowed: this.state.adminMode}}
+                                 mutationable={{allowed: false}}
                                  clickable={{
                                      allowed: !this.state.adminMode,
                                      handler: this.enterEvent,
                                      value: "REGISTER"
                                  }}
-                                 externalListModification={{allowed: true, path: "/event-create"}}
+                                 externalListModification={{allowed: this.state.adminMode, path: `/${this.props.user.id}/event-create`}}
                                  keyValue="id"/>
                 </div>
 

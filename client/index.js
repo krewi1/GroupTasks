@@ -11,6 +11,7 @@ import GroupCreate from './components/group/group_create';
 import EventCreate from './components/event/event_create';
 import EventDetail from './components/event/event_detail';
 import MyEvents from './components/event/my_events';
+import GroupEnter from './components/group/group_enter';
 
 const client = new ApolloClient({
     dataIdFromObject: o => o.id
@@ -27,6 +28,7 @@ const Root = () => {
                     <Route path="event-create" component={EventCreate}/>
                     <Route path="event-detail/:id" component={EventDetail}/>
                     <Route path="my-events" component={MyEvents}/>
+                    <Route path="group-enter" component={GroupEnter}/>
                 </Route>
             </Router>
         </ApolloProvider>

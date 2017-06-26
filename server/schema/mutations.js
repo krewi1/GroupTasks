@@ -123,10 +123,24 @@ const mutation = new GraphQLObjectType({
                 })
                     .then(({data}) => {
                         console.log(data);
-                        return axios.patch(`http://localhost:3000/groups/${data.groupId}`, {budgetInfo: JSON.parse(budgetInfo.replace(new RegExp("\'", 'g'),"\""))});
+                        return axios.patch(`http://localhost:3000/groups/${data.groupId}`, {budgetInfo: JSON.parse(budgetInfo.replace(new RegExp("\'", 'g'), "\""))});
                     })
                     .then((res) => res.data);
             }
+        },
+        enterGroup: {
+            type: UserType,
+            args: {
+                userId: {type: GraphQLID},
+                groupId: {type: GraphQLID}
+            },
+            resolve(parentValue, {userId, groupId}) {
+                return axios.patch(`http://localhost:3000/users/${userId}`, {
+                    groupId
+                })
+                    .then((res) => res.data);
+            }
+
         },
         leaveEvent: {
             type: EventType,

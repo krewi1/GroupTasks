@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {graphql, withApollo} from 'react-apollo';
+import {graphql} from 'react-apollo';
 import {hashHistory} from 'react-router';
 
 import SideBar from './side_bar.js';
@@ -14,16 +14,17 @@ class App extends Component {
         }
     }
 
-    componentWillReceiveProps() {
-        debugger;
+    componentWillReceiveProps({params}) {
         const data = this.props.data;
         const selected = this.state.selected;
 
-        data.refetch({
-            variables: {
-                userId: selected
-            }
-        });
+        if(params.id !== selected){
+            data.refetch({
+                variables: {
+                    userId: selected
+                }
+            });
+        }
     }
 
     changeUser = (event) => {

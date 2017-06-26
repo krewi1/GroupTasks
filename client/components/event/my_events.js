@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
 import moment from 'moment'
-import {hashHistory} from 'react-router';
+import {Link, hashHistory} from 'react-router';
 
 import ListWrapper from '../general/list_wrapper';
 
@@ -39,11 +39,12 @@ class MyEvents extends Component {
     render() {
         return (
             <div>
+                <Link to={`/${this.state.id}`}>Back</Link>
                 <h2>MyEvents</h2>
 
                 <div className="tabcontent">
                     <ListWrapper props={{name: "Name", expDate: "Expiration Date", value: "Value"}}
-                                 model={this.state.events.filter((event)=>event.user &&event.user.id === this.state.id && !event.completed && moment().diff(event.expDate) < 0)}
+                                 model={this.state.events.filter((event)=>event.user && event.user.id === this.state.id && !event.completed && moment().diff(event.expDate) < 0)}
                                  mutationable={{
                                      allowed: true,
                                      handler: this.leaveEvent,

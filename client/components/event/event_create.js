@@ -58,7 +58,7 @@ class EventCreate extends Component {
             <div>
                 <Link to="/">Back</Link>
 
-                <h3>Create a new group</h3>
+                <h3>Create a new event</h3>
 
                 <form onSubmit={this.onSubmit}>
                     <label>Event name
