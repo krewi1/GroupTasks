@@ -56,7 +56,7 @@ class Budget extends Component {
             refetchQueries: [{query: query}]
         };
         this.props.mutate(variableProp)
-            .then((res) => {this.setState(Budget.makeGroupModel(res.data.addBudget))});
+            .then((res) => hashHistory.push('/'));
     };
 
     render() {

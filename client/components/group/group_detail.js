@@ -33,10 +33,11 @@ class GroupDetail extends Component {
     };
 
     doneEvent = (eventId) => {
+        debugger;
         let event = this.props.group.events.find((event) => event.id === eventId);
         let budgetInfo = this.props.group.budgetInfo;
         let currBudgetState = budgetInfo = Object.assign({}, budgetInfo);
-        currBudgetState[event.user.id] = budgetInfo[event.user.id] + event.value;
+        currBudgetState[event.user.id] = budgetInfo[event.user.id] || 0 + event.value;
         let variableProp = {
             variables: {
                 eventId,
