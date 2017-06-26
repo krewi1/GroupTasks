@@ -16,7 +16,6 @@ class GroupCreate extends Component {
     }
 
     handleInputChange(event) {
-        debugger;
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -28,7 +27,6 @@ class GroupCreate extends Component {
 
     onSubmit(event) {
         event.preventDefault();
-        debugger;
 
         let variableProp = {
             variables: {

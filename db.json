@@ -12,15 +12,20 @@
       "userId": [
         "1"
       ],
-      "leader": "1"
+      "leader": null
     },
     {
       "name": "ahoj",
       "opened": true,
-      "eventId": [],
-      "budgetId": null,
+      "eventId": "",
+      "budgetsId": "B1WQQlA7W",
       "leader": "1",
-      "id": "HJfTZbs7Z"
+      "id": "HJfTZbs7Z",
+      "budgetInfo": {
+        "1": 0,
+        "2": 0,
+        "3": 0
+      }
     }
   ],
   "users": [
@@ -32,9 +37,9 @@
       "groupId": "HJfTZbs7Z"
     },
     {
-      "name": "Pavel Kratochvil",
+      "name": "Name",
       "id": "2",
-      "nickName": "krewilone",
+      "nickName": "best",
       "email": "test@test.cz",
       "groupId": "HJfTZbs7Z"
     },
@@ -43,7 +48,8 @@
       "id": "3",
       "nickName": "krewilone",
       "email": "test@test.cz",
-      "groupId": "HJfTZbs7Z"
+      "groupId": "HJfTZbs7Z",
+      "event": null
     }
   ],
   "budgets": [
@@ -51,6 +57,12 @@
       "id": "budget1",
       "expDate": "4.5.2017",
       "value": 100
+    },
+    {
+      "value": 200,
+      "expDate": "26/06/2017",
+      "groupId": "HJfTZbs7Z",
+      "id": "B1WQQlA7W"
     }
   ],
   "events": [
@@ -62,6 +74,14 @@
       "userId": "1",
       "done": false,
       "value": 100
+    },
+    {
+      "name": "dsadsa",
+      "value": 70,
+      "expDate": "06/28/2017",
+      "groupId": "HJfTZbs7Z",
+      "id": "Sypvix0X-",
+      "userId": "2"
     }
   ]
 }

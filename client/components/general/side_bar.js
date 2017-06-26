@@ -13,6 +13,7 @@ const SideBar = () => {
             <li><Link to="/profile"><i className="material-icons">perm_identity</i>Profile</Link></li>
             <li><Link to="/opengroups"><i className="material-icons">lock_open</i>OpenGroups</Link></li>
             <li><Link to="/mygroups"><i className="material-icons">group_work</i>MyGroups</Link></li>
+            <li><Link to="/my-events"><i className="material-icons">group_work</i>MyGroups</Link></li>
         </ul>
     );
 };

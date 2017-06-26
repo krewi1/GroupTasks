@@ -6,6 +6,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
+import {query} from '../../queries/queries.js'
+
 class EventCreate extends Component {
     constructor({user}) {
         super();
@@ -36,7 +38,7 @@ class EventCreate extends Component {
     onSubmit = (event) => {
         let date = this.state.expDate;
 
-        date = date.format("DD/MM/YYYY");
+        date = date.format("MM/DD/YYYY");
         event.preventDefault();
 
         let variableProp = {

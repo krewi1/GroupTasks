@@ -1,14 +1,20 @@
 import gql from 'graphql-tag';
 
 export const query = gql`
-{
-        profile{
+query Profile($userId: ID){
+        profile(userId: $userId){
             id
             nickName
             name
             email
             group{
                 id
+                budgetInfo
+                budget{
+                  id
+                  expDate
+                  value
+                }
               leader{
                 id
               }
@@ -21,6 +27,9 @@ export const query = gql`
                 name
                 expDate
                 value
+                user {
+                  id
+                }
               }
             }
         }

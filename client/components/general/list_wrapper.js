@@ -1,19 +1,28 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {Link, hashHistory} from 'react-router';
 
-const ListWrapper = ({props, model, mutationable, clickable, keyValue}) => { // eslint-disable-line react/prefer-stateless-function
+const ListWrapper = ({context, props, model, mutationable, clickable, externalListModification, keyValue}) => {
+    const externalModificationEnabled = externalListModification && externalListModification.allowed;
+    let addButton;
+    if(externalModificationEnabled) {
+        addButton = <i className="btn material-icons yellow darken-4"
+                       onClick={() => hashHistory.push(externalModificationEnabled && externalListModification.path)}>ADD</i>;
+    }
     return (
-        <table className="bordered">
-            <thead>
-            <tr>
-                {renderHead(Object.values(props))}
-            </tr>
-            </thead>
+        <div>
+            <table className="bordered">
+                <thead>
+                <tr>
+                    {renderHead(Object.values(props))}
+                </tr>
+                </thead>
 
-            <tbody>
-            {renderBody(Object.keys(props), model, clickable, mutationable, keyValue)}
-            </tbody>
-        </table>
+                <tbody>
+                {renderBody(Object.keys(props), model, clickable, mutationable, keyValue)}
+                </tbody>
+            </table>
+            <div className="right-align">{externalModificationEnabled && addButton}</div>
+        </div>
     );
 };
 
@@ -23,10 +32,22 @@ function renderHead(names) {
 
 function renderBody(props, model, clickable, mutationable, keyValue) {
     return model.map((item) => {
-        let deleteKey = item[keyValue];
+        let importantKey = item[keyValue];
         let delButton;
+        let clickButton;
         if (mutationable.allowed) {
-            delButton = <td><i className="btn material-icons red darken-4" onClick={()=>mutationable.handler(deleteKey)}>delete</i></td>;
+            delButton =
+                <td>
+                    <i className="btn material-icons red darken-4" onClick={() => mutationable.handler(importantKey)}>delete</i>
+                </td>;
+        }
+
+        if (clickable.allowed) {
+            clickButton =
+                <td>
+                    <div className="btn material-icons blue darken-4"
+                         onClick={() => clickable.handler(importantKey)}>{clickable.value}</div>
+                </td>;
         }
         let rowCols = props.map((prop) => renderCell(item[prop]));
         if (!clickable.allowed) {
@@ -35,11 +56,10 @@ function renderBody(props, model, clickable, mutationable, keyValue) {
                 {mutationable.allowed && delButton}
             </tr>)
         }
-        return (<tr>
-            <Link to={clickable.path}>
-                {rowCols}
-                {mutationable.allowed && delButton}
-            </Link>
+        return (<tr className="clickAble" onClick={() => clickable.handler(importantKey)}>
+            {rowCols}
+            {mutationable.allowed && delButton}
+            {clickable.allowed && clickButton}
         </tr>)
     })
 }

@@ -1,23 +1,37 @@
 import React, {Component} from 'react';
 import {graphql, compose} from 'react-apollo';
 import gql from 'graphql-tag';
+import moment from 'moment'
 
 import ProgressBar from '../general/progress_bar';
 import ListWrapper from '../general/list_wrapper';
+import Budget from './budget';
 import {query} from '../../queries/queries.js'
 
 class GroupDetail extends Component {
-    constructor({group}) {
+    constructor({group, user}) {
         super();
         let delGroup = {
             id: group.id,
             users: group.users
         };
         this.state = {
+            adminMode: user.id === group.leader.id,
             selected: 0,
             group: delGroup
         }
     }
+
+    enterEvent = (eventId) => {
+        let variableProp = {
+            variables: {
+                eventId,
+                userId: this.props.user.id
+            },
+            //refetchQueries: [{query: query}]
+        };
+        this.props.enterEvent(variableProp);
+    };
 
     handleUserRemove = (userId) => {
         let variableProp = {
@@ -25,7 +39,7 @@ class GroupDetail extends Component {
                 group: this.state.group,
                 userId
             },
-             refetchQueries: [{query: query}]
+            //refetchQueries: [{query: query}]
         };
         this.props.userRemove(variableProp);
     };
@@ -44,7 +58,8 @@ class GroupDetail extends Component {
         let group = this.props.group;
         return (
             <div>
-                <ProgressBar adminMode={this.props.adminMode}/>
+                <ProgressBar adminMode={this.state.adminMode} progress={group.budgetInfo[this.props.user.id]}
+                maximum={group.budget.value}/>
                 <h2>Group</h2>
                 <div className="tab">
                     <button className="tablinks" onClick={() => this.setState({selected: 0})}>Users</button>
@@ -53,19 +68,27 @@ class GroupDetail extends Component {
                 </div>
 
                 <div className="tabcontent" style={{display: this.state.selected !== 0 && "none"}}>
-                    <ListWrapper props={{nickName: "Nick"}} model={group.users} mutationable={{allowed: this.props.adminMode, handler: this.handleUserRemove}}
-                                 clickable = {{allowed: false}}
+                    <ListWrapper props={{nickName: "Nick"}} model={group.users}
+                                 mutationable={{allowed: this.state.adminMode, handler: this.handleUserRemove}}
+                                 clickable={{allowed: false}}
                                  keyValue="id"/>
                 </div>
 
                 <div className="tabcontent" style={{display: this.state.selected !== 1 && "none"}}>
-                    <ListWrapper props={{name: "Name", expDate: "Expiration Date", value: "Value"}} model={group.events}
-                                 mutationable={{allowed: false}} clickable = {{allowed: false}} keyValue="id"/>
+                    <ListWrapper props={{name: "Name", expDate: "Expiration Date", value: "Value"}}
+                                 model={group.events.filter((event)=>!Boolean(event.user) && moment().diff(event.expDate) < 0)}
+                                 mutationable={{allowed: this.state.adminMode}}
+                                 clickable={{
+                                     allowed: !this.state.adminMode,
+                                     handler: this.enterEvent,
+                                     value: "REGISTER"
+                                 }}
+                                 externalListModification={{allowed: true, path: "/event-create"}}
+                                 keyValue="id"/>
                 </div>
 
                 <div className="tabcontent" style={{display: this.state.selected !== 2 && "none"}}>
-                    <h3>Tokyo</h3>
-                    <p>Tokyo is the capital of Japan.</p>
+                    <Budget group={group}/>
                 </div>
             </div>
         );
@@ -94,9 +117,31 @@ const eventRemove = gql`
     }
 `;
 
+const enterEvent = gql`
+    mutation RegisterEvent($eventId: ID, $userId: ID){
+        registerToEvent(eventId: $eventId, userId: $userId){
+            id
+            name
+            events{
+                id
+                name
+                expDate
+                value
+                group{
+                    id
+                }
+                user{
+                    id
+                }
+            }
+  }
+}
+`;
+
 
 export default compose(
-    graphql(userRemove, { name: 'userRemove' }),
-    graphql(eventRemove, { name: 'deleteSomething' })
+    graphql(userRemove, {name: 'userRemove'}),
+    graphql(eventRemove, {name: 'deleteSomething'}),
+    graphql(enterEvent, {name: 'enterEvent'})
 )(GroupDetail);
 

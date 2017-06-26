@@ -7,9 +7,10 @@ import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 
 import GroupList from './components/general/landing_page';
 import App from './components/general/app';
-import Profile from './components/general/my_profile';
 import GroupCreate from './components/group/group_create';
 import EventCreate from './components/event/event_create';
+import EventDetail from './components/event/event_detail';
+import MyEvents from './components/event/my_events';
 
 const client = new ApolloClient({
     dataIdFromObject: o => o.id
@@ -19,13 +20,13 @@ const Root = () => {
     return (
         <ApolloProvider client={client}>
             <Router history={hashHistory}>
-                <Route path="/" component={App}>
+                <Route path="/(:id)" component={App}>
                     <IndexRoute component={GroupList}/>
-                    <Route path="/profile" component={Profile}/>
-                    <Route path="/group-create" component={GroupCreate}/>
-                    <Route path="/profile" component={Profile}/>
-                    <Route path="/profile" component={Profile}/>
-                    <Route path="/event-create" component={EventCreate}/>
+                    {/*<Route path="profile" component={Profile}/>*/}
+                    <Route path="group-create" component={GroupCreate}/>
+                    <Route path="event-create" component={EventCreate}/>
+                    <Route path="event-detail/:id" component={EventDetail}/>
+                    <Route path="my-events" component={MyEvents}/>
                 </Route>
             </Router>
         </ApolloProvider>

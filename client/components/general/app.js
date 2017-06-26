@@ -1,12 +1,18 @@
 import React, {Component} from 'react';
-import gql from 'graphql-tag';
-import {graphql} from 'react-apollo';
+import {graphql, withApollo} from 'react-apollo';
 
 import SideBar from './side_bar.js';
 import Loader from './loader.js';
 import {query} from '../../queries/queries.js'
 
 class App extends Component {
+    componentWillReceiveProps(){
+        debugger;
+        const data = this.props.data;
+        if(!data.profile){
+            data.refetch();
+        }
+    }
     render() {
         const data = this.props.data;
         if(data.loading){return <Loader />;}
@@ -21,4 +27,6 @@ class App extends Component {
 }
 
 
-export default graphql(query)(App)
+export default graphql(query, {
+    options: ({ params }) => ({ variables: { userId: params.id || 1 } })
+})(App)
