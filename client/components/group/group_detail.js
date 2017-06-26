@@ -6,7 +6,6 @@ import moment from 'moment'
 import ProgressBar from '../general/progress_bar';
 import ListWrapper from '../general/list_wrapper';
 import Budget from './budget';
-import {query} from '../../queries/queries.js'
 
 class GroupDetail extends Component {
     constructor({group, user}) {
@@ -34,7 +33,6 @@ class GroupDetail extends Component {
     };
 
     doneEvent = (eventId) => {
-        debugger;
         let event = this.props.group.events.find((event) => event.id === eventId);
         let budgetInfo = this.props.group.budgetInfo;
         let currBudgetState = budgetInfo = Object.assign({}, budgetInfo);
@@ -72,10 +70,9 @@ class GroupDetail extends Component {
     };
 
     render() {
-        debugger;
         let group = this.props.group;
-        let progressBar = Boolean(group.budgetInfo)? <ProgressBar adminMode={this.state.adminMode} progress={group.budgetInfo[this.props.user.id]||0}
-                                                                   maximum={group.budget.value }/> : <div />;
+        let progressBar = Boolean(group.budgetInfo) && !this.state.adminMode ? <ProgressBar adminMode={this.state.adminMode} progress={group.budgetInfo[this.props.user.id]||0}
+                                                                   maximum={group.budget.value}/> : <div />;
         return (
             <div>
                 {progressBar}

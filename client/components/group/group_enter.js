@@ -3,6 +3,8 @@ import {Link, hashHistory} from 'react-router';
 import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 
+import {query} from '../../queries/queries.js'
+
 class GroupEntry extends Component {
     constructor({params}) {
         super();
@@ -25,7 +27,8 @@ class GroupEntry extends Component {
             variables: {
                 groupId: this.state.groupId,
                 userId: this.state.userId
-            }
+            },
+            refetchQueries: [{query}]
         };
         this.props.mutate(variableProp)
             .then(() => hashHistory.push(`/${this.state.userId}`));
