@@ -89,7 +89,7 @@ const mutation = new GraphQLObjectType({
                 return axios.post(`http://localhost:3000/budgets/`, {
                     value: value,
                     expDate: expDate,
-                    groupsId: group.id
+                    groupId: group.id
                 })
                     .then(() => axios.patch(`http://localhost:3000/groups/${group.id}`, {
                         budgetInfo: budgetInfo

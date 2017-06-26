@@ -3,6 +3,8 @@ import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
 import {Link, hashHistory} from 'react-router';
 
+import {query} from '../../queries/queries';
+
 class GroupCreate extends Component {
     constructor(props) {
         super(props);
@@ -29,13 +31,14 @@ class GroupCreate extends Component {
         event.preventDefault();
 
         let variableProp = {
-            variables: {
-                name: this.state.name,
-                opened: this.state.isOpened,
-                userId: this.state.userId
-            }/*,
-             refetchQueries: [{query: query}]*/
-        };
+                variables: {
+                    name: this.state.name,
+                    opened: this.state.isOpened,
+                    userId: this.state.userId
+                },
+                refetchQueries: [{query}]
+            }
+        ;
         this.props.try(variableProp)
             .then(() => hashHistory.push(`/${this.state.userId}`));
     }
