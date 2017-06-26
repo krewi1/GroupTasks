@@ -23,7 +23,7 @@
       "id": "HJfTZbs7Z",
       "budgetInfo": {
         "1": 0,
-        "2": 0,
+        "2": 350,
         "3": 0
       }
     }
@@ -71,9 +71,10 @@
       "name": "event1",
       "expDate": "4.5.2017",
       "groupId": "HJfTZbs7Z",
-      "userId": "1",
+      "userId": null,
       "done": false,
-      "value": 100
+      "value": 100,
+      "completed": false
     },
     {
       "name": "dsadsa",
@@ -81,7 +82,9 @@
       "expDate": "06/28/2017",
       "groupId": "HJfTZbs7Z",
       "id": "Sypvix0X-",
-      "userId": "2"
+      "userId": "2",
+      "completed": true,
+      "done": true
     }
   ]
 }

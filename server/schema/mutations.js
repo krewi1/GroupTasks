@@ -4,6 +4,7 @@ const axios = require('axios');
 const UserType = require('./user_type');
 const GroupType = require('./group_type');
 const EventType = require('./event_type');
+const GraphQLJSON = require('graphql-type-json');
 
 const GroupInputType = new GraphQLInputObjectType({
     name: 'GroupInputType',
@@ -53,7 +54,9 @@ const mutation = new GraphQLObjectType({
                     name: name,
                     value: value,
                     expDate: expDate,
-                    groupId: groupId
+                    groupId: groupId,
+                    completed: false,
+                    done: false
                 })
                     .then(() => axios.get(`http://localhost:3000/groups/${groupId}`))
                     .then((res) => res.data);
@@ -91,6 +94,51 @@ const mutation = new GraphQLObjectType({
                     .then(() => axios.patch(`http://localhost:3000/groups/${group.id}`, {
                         budgetInfo: budgetInfo
                     }))
+                    .then((res) => res.data);
+            }
+        },
+        completeEvent: {
+            type: EventType,
+            args: {
+                eventId: {type: GraphQLID}
+            },
+            resolve(parentValue, {eventId, budgetInfo}) {
+                return axios.patch(`http://localhost:3000/events/${eventId}`, {
+                    completed: true
+                })
+                    .then((res) => res.data);
+            }
+        },
+        doneEvent: {
+            type: GroupType,
+            args: {
+                eventId: {type: GraphQLID},
+                budgetInfo: {type: GraphQLJSON}
+            },
+            resolve(parentValue, {eventId, budgetInfo}) {
+                console.log(eventId, budgetInfo);
+                return axios.patch(`http://localhost:3000/events/${eventId}`, {
+                    completed: true,
+                    done: true
+                })
+                    .then(({data}) => {
+                        console.log(data);
+                        return axios.patch(`http://localhost:3000/groups/${data.groupId}`, {budgetInfo: JSON.parse(budgetInfo.replace(new RegExp("\'", 'g'),"\""))});
+                    })
+                    .then((res) => res.data);
+            }
+        },
+        leaveEvent: {
+            type: EventType,
+            args: {
+                eventId: {type: GraphQLID},
+                budgetInfo: {type: GraphQLJSON}
+            },
+            resolve(parentValue, {eventId, budgetInfo}) {
+                return axios.patch(`http://localhost:3000/events/${eventId}`, {
+                    completed: false,
+                    userId: null
+                })
                     .then((res) => res.data);
             }
         },

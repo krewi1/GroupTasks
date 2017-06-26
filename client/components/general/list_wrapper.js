@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link, hashHistory} from 'react-router';
 
-const ListWrapper = ({context, props, model, mutationable, clickable, externalListModification, keyValue}) => {
+const ListWrapper = ({ props, model, mutationable, clickable, externalListModification, keyValue}) => {
     const externalModificationEnabled = externalListModification && externalListModification.allowed;
     let addButton;
     if(externalModificationEnabled) {
@@ -38,7 +38,7 @@ function renderBody(props, model, clickable, mutationable, keyValue) {
         if (mutationable.allowed) {
             delButton =
                 <td>
-                    <i className="btn material-icons red darken-4" onClick={() => mutationable.handler(importantKey)}>delete</i>
+                    <i className="btn material-icons red darken-4" onClick={() => mutationable.handler(importantKey)}>{mutationable.value}</i>
                 </td>;
         }
 

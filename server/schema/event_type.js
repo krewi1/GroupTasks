@@ -4,7 +4,8 @@ const {
     GraphQLObjectType,
     GraphQLID,
     GraphQLInt,
-    GraphQLString
+    GraphQLString,
+    GraphQLBoolean,
 } = graphql;
 
 const EventType = new GraphQLObjectType({
@@ -14,6 +15,8 @@ const EventType = new GraphQLObjectType({
         name: {type: GraphQLString},
         expDate: {type: GraphQLString},
         value: {type: GraphQLInt},
+        completed: {type: GraphQLBoolean},
+        done: {type: GraphQLBoolean},
         group: {
             //fixing circular reference with require inside scope
             type: require('./group_type'),

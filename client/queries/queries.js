@@ -27,6 +27,8 @@ query Profile($userId: ID){
                 name
                 expDate
                 value
+                completed
+                done
                 user {
                   id
                 }

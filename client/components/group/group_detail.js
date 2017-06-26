@@ -33,6 +33,35 @@ class GroupDetail extends Component {
         this.props.enterEvent(variableProp);
     };
 
+    doneEvent = (eventId) => {
+        debugger;
+        let event = this.props.group.events.find((event) => event.id === eventId);
+        let budgetInfo = this.props.group.budgetInfo;
+        let currBudgetState = budgetInfo = Object.assign({}, budgetInfo);
+        currBudgetState[event.user.id] = budgetInfo[event.user.id] + event.value;
+        let variableProp = {
+            variables: {
+                eventId,
+                budgetInfo: JSON.stringify(currBudgetState)
+            },
+            //refetchQueries: [{query: query}]
+        };
+        this.props.doneEvent(variableProp);
+    };
+
+    static wrapStateToString(state){
+        let newState = Object.assign({}, state);
+        Object.keys(newState).forEach((key)=>{
+            let new_key = `'${key}'`;
+                Object.defineProperty(newState, new_key,
+                    Object.getOwnPropertyDescriptor(newState, key));
+                delete newState[key];
+        });
+        return newState
+
+    }
+
+
     handleUserRemove = (userId) => {
         let variableProp = {
             variables: {
@@ -59,12 +88,16 @@ class GroupDetail extends Component {
         return (
             <div>
                 <ProgressBar adminMode={this.state.adminMode} progress={group.budgetInfo[this.props.user.id]}
-                maximum={group.budget.value}/>
+                             maximum={group.budget.value}/>
                 <h2>Group</h2>
                 <div className="tab">
                     <button className="tablinks" onClick={() => this.setState({selected: 0})}>Users</button>
                     <button className="tablinks" onClick={() => this.setState({selected: 1})}>Events</button>
-                    <button className="tablinks" onClick={() => this.setState({selected: 2})}>Budget</button>
+                    <button className="tablinks" onClick={() => this.setState({selected: 2})}
+                            style={{display: !this.state.adminMode && "none"}}>Budget</button>
+                    <button className="tablinks" onClick={() => this.setState({selected: 3})}
+                            style={{display: !this.state.adminMode && "none"}}>Events done
+                    </button>
                 </div>
 
                 <div className="tabcontent" style={{display: this.state.selected !== 0 && "none"}}>
@@ -76,7 +109,7 @@ class GroupDetail extends Component {
 
                 <div className="tabcontent" style={{display: this.state.selected !== 1 && "none"}}>
                     <ListWrapper props={{name: "Name", expDate: "Expiration Date", value: "Value"}}
-                                 model={group.events.filter((event)=>!Boolean(event.user) && moment().diff(event.expDate) < 0)}
+                                 model={group.events.filter((event) => !Boolean(event.user) && moment().diff(event.expDate) < 0)}
                                  mutationable={{allowed: this.state.adminMode}}
                                  clickable={{
                                      allowed: !this.state.adminMode,
@@ -89,6 +122,19 @@ class GroupDetail extends Component {
 
                 <div className="tabcontent" style={{display: this.state.selected !== 2 && "none"}}>
                     <Budget group={group}/>
+                </div>
+
+                <div className="tabcontent" style={{display: this.state.selected !== 3 && "none"}}>
+                    <ListWrapper props={{name: "Name", expDate: "Expiration Date", value: "Value"}}
+                                 model={group.events.filter((event) => event.completed)}
+                                 mutationable={{allowed: false}}
+                                 clickable={{
+                                     allowed: true,
+                                     handler: this.doneEvent,
+                                     value: "DONE"
+                                 }}
+                                 externalListModification={{allowed: false}}
+                                 keyValue="id"/>
                 </div>
             </div>
         );
@@ -117,6 +163,15 @@ const eventRemove = gql`
     }
 `;
 
+const doneEvent = gql`
+    mutation DoneEvent($eventId: ID, $budgetInfo: JSON){
+  doneEvent(eventId: $eventId, budgetInfo: $budgetInfo){
+    id
+    budgetInfo
+  }
+}
+`;
+
 const enterEvent = gql`
     mutation RegisterEvent($eventId: ID, $userId: ID){
         registerToEvent(eventId: $eventId, userId: $userId){
@@ -142,6 +197,7 @@ const enterEvent = gql`
 export default compose(
     graphql(userRemove, {name: 'userRemove'}),
     graphql(eventRemove, {name: 'deleteSomething'}),
-    graphql(enterEvent, {name: 'enterEvent'})
+    graphql(enterEvent, {name: 'enterEvent'}),
+    graphql(doneEvent, {name: 'doneEvent'}),
 )(GroupDetail);
 

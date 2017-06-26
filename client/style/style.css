@@ -73,6 +73,18 @@ div.tab button.active {
     animation: sk-rotateplane 1.2s infinite ease-in-out;
 }
 
+.notAtAll{
+    background-color:red
+}
+
+.inTheMiddle{
+    background-color:yellow;
+}
+
+.almostDone{
+    background-color: green;
+}
+
 @-webkit-keyframes sk-rotateplane {
     0% { -webkit-transform: perspective(120px) }
     50% { -webkit-transform: perspective(120px) rotateY(180deg) }
